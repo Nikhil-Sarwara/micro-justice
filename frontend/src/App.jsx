@@ -1,11 +1,15 @@
-import {Button} from "@chakra-ui/react";
-function App() {
+import React from "react";
+import { Box } from "@chakra-ui/react";
+import Navbar from "./components/Navbar";
+import AppRoutes from "./routes/AppRoutes";
 
+const App = () => {
   return (
-    <Button>
-Click Me
-    </Button>
-  )
-}
+    <Box>
+      <Navbar />
+      <AppRoutes />
+    </Box>
+  );
+};
 
-export default App
+export default App;
