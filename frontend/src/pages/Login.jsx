@@ -8,8 +8,9 @@ import {
   FormLabel,
   Text,
   VStack,
+  Link as ChakraLink,
 } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link as RouterLink } from "react-router-dom";
 
 const Login = () => {
   const { login } = useAuth();
@@ -38,7 +39,7 @@ const Login = () => {
       }
 
       login(data.user, data.token);
-      navigate("/"); // Redirect to home after login
+      navigate("/dashboard");
     } catch (err) {
       setError("Something went wrong");
     }
@@ -81,6 +82,13 @@ const Login = () => {
           <Button type="submit" colorScheme="teal" width="full">
             Login
           </Button>
+
+          <Text fontSize="sm" color="gray.600">
+            Don’t have an account?{" "}
+            <ChakraLink as={RouterLink} to="/register" color="teal.500">
+              Register here
+            </ChakraLink>
+          </Text>
         </VStack>
       </form>
     </Box>
