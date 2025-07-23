@@ -6,16 +6,23 @@ const STORAGE_KEY = "microjustice_auth";
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(() => {
-    // Try load from localStorage
-    const stored = localStorage.getItem(STORAGE_KEY);
-    return stored ? JSON.parse(stored).user : null;
-  });
-  const [token, setToken] = useState(() => {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    return stored ? JSON.parse(stored).token : null;
+    // Try to load from localStorage on initial render
+    if (typeof window !== "undefined") {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      return stored ? JSON.parse(stored).user : null;
+    }
+    return null;
   });
 
-  // Save to localStorage on changes
+  const [token, setToken] = useState(() => {
+    if (typeof window !== "undefined") {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      return stored ? JSON.parse(stored).token : null;
+    }
+    return null;
+  });
+
+  // Save to localStorage whenever user or token changes
   useEffect(() => {
     if (user && token) {
       localStorage.setItem(STORAGE_KEY, JSON.stringify({ user, token }));
@@ -34,11 +41,12 @@ export const AuthProvider = ({ children }) => {
     setToken(null);
   };
 
-  const isAuthenticated = !!user;
+  const isAuthenticated = !!token && !!user;
+  const userId = user?.id; // Derive userId from the user object
 
   return (
     <AuthContext.Provider
-      value={{ user, token, login, logout, isAuthenticated }}
+      value={{ user, userId, token, login, logout, isAuthenticated }}
     >
       {children}
     </AuthContext.Provider>

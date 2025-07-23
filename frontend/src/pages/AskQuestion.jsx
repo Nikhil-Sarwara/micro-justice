@@ -7,68 +7,68 @@ import {
   Textarea,
   Heading,
   useToast,
+  Select,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import axios from "axios";
-import { useAuth } from "../contexts/AuthContext"; // <--- Import useAuth
+import { useAuth } from "../contexts/AuthContext";
 
 const AskQuestion = () => {
   const [title, setTitle] = useState("");
-  const [details, setDetails] = useState("");
+  const [description, setDescription] = useState("");
+  const [category, setCategory] = useState("general");
   const toast = useToast();
-  const { token, isAuthenticated } = useAuth(); // <--- Get token and isAuthenticated from context
+
+  // Get authentication data from the context
+  const { user, token, isAuthenticated } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!isAuthenticated || !token) { // Add a check for authenticated state
+    if (!isAuthenticated) {
       toast({
         title: "Please log in to ask a question.",
         status: "warning",
         duration: 3000,
         isClosable: true,
       });
-      return; // Stop the function if not authenticated
+      return;
     }
+
+    const requestBody = { title, description, category };
+
+    // Log the exact body being sent
+    console.log(
+      "[DEBUG] Request Body Sent to Backend:",
+      JSON.stringify(requestBody)
+    );
 
     try {
       const response = await fetch("/api/questions", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`, // <--- Use token from context
+          // The backend middleware uses this token to identify the user
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ title, details, category: "general" }), // Added category as per createQuestion.js
+        body: JSON.stringify(requestBody),
       });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Something went wrong");
-      }
-
-      toast({
-        title: "Question posted!",
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-      });
-
-      setTitle("");
-      setDetails("");
+      // ... rest of the function
     } catch (error) {
-      console.error("Error posting question:", error); // Log the actual error
-      toast({
-        title: "Error posting question",
-        description: error.message || "Something went wrong", // Use error.message directly
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
+      // ... error handling
     }
   };
 
   return (
-    <Box maxW="700px" mx="auto" mt={10} p={5} borderWidth="1px" borderRadius="lg">
+    // ... JSX for your form ...
+    <Box
+      maxW="700px"
+      mx="auto"
+      mt={10}
+      p={5}
+      borderWidth="1px"
+      borderRadius="lg"
+    >
       <Heading mb={6}>Ask a Question</Heading>
       <form onSubmit={handleSubmit}>
         <FormControl id="title" mb={4} isRequired>
@@ -80,24 +80,27 @@ const AskQuestion = () => {
           />
         </FormControl>
 
-        <FormControl id="details" mb={6} isRequired>
-          <FormLabel>Details</FormLabel>
+        <FormControl id="description" mb={6} isRequired>
+          <FormLabel>Description</FormLabel>
           <Textarea
             placeholder="Provide more context or background here..."
-            value={details}
-            onChange={(e) => setDetails(e.target.value)}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
             rows={6}
           />
         </FormControl>
-        {/* You also need a category input/selection, as createQuestion.js requires it */}
+
         <FormControl id="category" mb={6} isRequired>
           <FormLabel>Category</FormLabel>
-          <Input
-            placeholder="e.g. Legal, Consumer Rights"
-            // You might want a select dropdown for categories
-            value="general" // Placeholder, replace with actual state/input
-            onChange={(e) => { /* setCategory(e.target.value) */ }}
-          />
+          <Select
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+          >
+            <option value="general">General</option>
+            <option value="legal">Legal</option>
+            <option value="consumer-rights">Consumer Rights</option>
+            <option value="technical">Technical</option>
+          </Select>
         </FormControl>
 
         <Button colorScheme="blue" type="submit">
