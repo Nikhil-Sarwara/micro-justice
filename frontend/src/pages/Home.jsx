@@ -9,7 +9,7 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import {
   FaBalanceScale,
   FaPenNib,
@@ -62,26 +62,40 @@ const Home = () => {
             Micro Justice
           </Heading>
           <HStack spacing={8}>
-            <Link
-              href="#"
+            <Button
+              as={RouterLink}
+              to="/"
+              variant="link"
               color="gray.600"
               fontWeight="medium"
-              display={{ base: "none", md: "inline" }}
             >
               Our Mission
-            </Link>
-            <Link
-              href="#"
+            </Button>
+            <Button
+              as={RouterLink}
+              to="/"
+              variant="link"
               color="gray.600"
               fontWeight="medium"
-              display={{ base: "none", md: "inline" }}
             >
               Blog
-            </Link>
-            <Link href="/login" color="gray.600" fontWeight="medium">
+            </Button>
+            <Button
+              as={RouterLink}
+              to="/login"
+              variant="link"
+              color="gray.600"
+              fontWeight="medium"
+            >
               Sign In
-            </Link>
-            <Button colorScheme="teal" variant="solid" size="md">
+            </Button>
+            <Button
+              as={RouterLink}
+              to="/"
+              colorScheme="teal"
+              variant="solid"
+              size="md"
+            >
               Get Started
             </Button>
           </HStack>
@@ -190,7 +204,7 @@ const Home = () => {
         >
           <HStack spacing={6}>
             <Button
-              as={Link}
+              as={RouterLink}
               to="/help"
               variant="link"
               colorScheme="gray"
@@ -200,7 +214,7 @@ const Home = () => {
               Help
             </Button>
             <Button
-              as={Link}
+              as={RouterLink}
               to="/status"
               variant="link"
               colorScheme="gray"
@@ -210,7 +224,7 @@ const Home = () => {
               Status
             </Button>
             <Button
-              as={Link}
+              as={RouterLink}
               to="/about"
               variant="link"
               colorScheme="gray"
@@ -220,7 +234,7 @@ const Home = () => {
               About
             </Button>
             <Button
-              as={Link}
+              as={RouterLink}
               to="/careers"
               variant="link"
               colorScheme="gray"
@@ -230,7 +244,7 @@ const Home = () => {
               Careers
             </Button>
             <Button
-              as={Link}
+              as={RouterLink}
               to="/privacy"
               variant="link"
               colorScheme="gray"
@@ -240,7 +254,7 @@ const Home = () => {
               Privacy
             </Button>
             <Button
-              as={Link}
+              as={RouterLink}
               to="/terms"
               variant="link"
               colorScheme="gray"
