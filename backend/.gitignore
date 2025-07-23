@@ -1,3 +1,71 @@
 node_modules
 .env
-/src/generated/prisma
+dist
+.env.local
+.env.development.local
+.env.production.local
+.env.test.local
+
+# Log files
+logs
+pids
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Dependency directories
+node_modules
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Tests
+coverage
+
+# Output of 'npm pack'
+*.tgz
+
+# dotenv environment variable files
+.env
+.env.local
+.env.development.local
+.env.production.local
+.env.test.local
+
+# parcel-bundler cache (https://parceljs.org/)
+.cache
+
+# nextjs build output
+.next
+
+# nuxt.js build output
+.nuxt
+
+# prisma
+.dbml
+.migration
+.seed
+.schema
+
+# vercel
+.vercel
+.env.local
+.env.build
+.env.production
+.env.development
+.env.test
+
