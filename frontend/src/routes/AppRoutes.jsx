@@ -25,10 +25,8 @@ const AppRoutes = () => {
     { path: "/privacy", element: <Privacy /> },
     { path: "/status", element: <Status /> },
     { path: "/terms", element: <Terms /> },
-    {
-      path: "/about",
-      element: <About />,
-    },
+    { path: "/about", element: <About /> },
+    
     {
       path: "*",
       element: <h1>Not Found</h1>,
